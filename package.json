@@ -1,0 +1,31 @@
+{
+  "name": "fluent-fsm",
+  "version": "0.0.0",
+  "description": "DSL to comfortably define finite state machines for node.js",
+  "main": "index.js",
+  "dependencies": {
+    "express": "~3.1.0",
+    "fs": "~0.0.0",
+    "group-by": "~0.0.1",
+    "LiveScript": "~1.1.1",
+    "moment": "~1.7.2",
+    "optimist": "~0.3.5",
+    "stringsim": "~0.0.1",
+    "underscore": "~1.4.3",
+    "underscore.string": "~2.3.1"
+  },
+  "contributors": [
+    {
+      "name": "Vittorio Zaccaria",
+      "email": "vittorio.zaccaria@gmail.com"
+    }
+  ],
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha ./lib/test.js --reporter spec"
+  },
+  "repository": "",
+  "author": "Vittorio Zaccaria",
+  "license": "BSD"
+}
+

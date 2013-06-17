@@ -1,0 +1,95 @@
+@black:                 #000;
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+@white:                 #fff;
+@blue:                  #049cdb;
+@blueDark:              #0064cd;
+@green:                 #46a546;
+@red:                   #9d261d;
+@yellow:                #ffc40d;
+@orange:                #f89406;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
+
+.node-mix(@color: @gray, @stroke: @black) {
+  stroke: @stroke;
+  fill: @color;
+  stroke-width: 0px;
+  
+  .initial
+  {
+    fill: darken(@color, 20%)
+  }
+}
+
+.link-mix(@color)
+{
+  stroke        : @color;
+  stroke-opacity: .6;
+  stroke-width  : 1.5px;
+}
+
+.link-fail-mix(@color)
+{
+  stroke        : @color;
+  stroke-opacity: .6;
+  stroke-width  : 1.5px;
+  stroke-dasharray: 0,2 1;
+}
+
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+  &.shadow {
+  stroke: #fff;
+  stroke-width: 3px;
+  stroke-opacity: .8;
+  }
+}
+
+.marker-mix(@color) {
+  fill: @color
+}
+
+path.link    { fill: none }
+
+// Dont touch above this line..
+.node                 { .node-mix(lighten(@grayLight,2%), @grayDark) }
+
+.link                 { .link-mix(@red) }
+marker                { .marker-mix(@red)}
+
+@open: @green;
+@close: @red;
+
+// .link.scheduleOpen   { .link-mix(@open) }
+// marker#scheduleOpen  { .marker-mix(@open)}
+
+// .link.triggerOpen   { .link-mix(darken(@open,10%)) }
+// marker#triggerOpen  { .marker-mix(darken(@open,10%))}
+
+// .link.executedOpen   { .link-mix(darken(@open,10%)) }
+// marker#executedOpen  { .marker-mix(darken(@open,10%))}
+
+
+// .link.scheduleClose  { .link-mix(@close) }
+// marker#scheduleClose { .marker-mix(@close)}
+
+// .link.triggerClose  { .link-mix(darken(@close,10%)) }
+// marker#triggerClose { .marker-mix(darken(@close,10%))}
+
+// .link.executedClose  { .link-mix(darken(@close,10%)) }
+// marker#executedClose { .marker-mix(darken(@close,10%))}
+
+// .link.failedClose  { .link-fail-mix(darken(@close,10%)) }
+// marker#failedClose { .marker-mix(darken(@close,10%))}
+
+// .link.failedOpen  { .link-fail-mix(darken(@open,10%)) }
+// marker#failedOpen { .marker-mix(darken(@open,10%))}
+
+
+
