@@ -1,6 +1,6 @@
 {
   "name": "fluent-fsm",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "DSL to comfortably define finite state machines for node.js",
   "main": "index.js",
   "dependencies": {
@@ -28,4 +28,3 @@
   "author": "Vittorio Zaccaria",
   "license": "BSD"
 }
-
