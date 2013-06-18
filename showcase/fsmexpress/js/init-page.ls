@@ -127,20 +127,6 @@ You can see live state transitions (wherever the fsm is, even remotely, provided
 
  [^1]: In livescript, dashes "-" are used to create camelized Javascript identifiers. So, `any-of` is translated to `anyOf` by the livescript compiler.
 
-## To do
-
-The following is a tentative list of actions around this project.
-
-| date          | action                            | category  |
-| ------------- | -------------                     | :-------: |
-| June 24, 2013 | link to a live example            | BLD       |
-| June 30, 2013 | release version 0.0.1             | REL       |
-
-
-
-    
-
- 
 
 '''
 

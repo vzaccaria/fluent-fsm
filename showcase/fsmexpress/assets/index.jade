@@ -26,14 +26,18 @@ html(lang='en')
    
     .jumbotron.masthead 
         .container      
-              h1 FSM express
+              h1 fluent-fsm
               p The ultimate finite state machine library for Nodejs
               .btn.btn-small.btn-success Download 
-              .btn.btn-small.btn-success Clone on Github 
+              .btn.btn-small.btn-success Clone on Github
+
 
     //- End: Exactly as bootstrap
+
+
           
     .container.under-the-jumbotron
+        #chart.code
         .span8.offset2
           #text
           hr 
@@ -42,6 +46,10 @@ html(lang='en')
           
     script(src="js/vendor.js")
     script(src="js/client.js")
+    script 
+      mcup = new eventMockup(333); 
+      vis = new fsmVisualizer(mcup.getEmitter());
+      mcup.runEvents(["II", "IS", "SS", "PS", "OS", "OP" ]);
 
 
 

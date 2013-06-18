@@ -20,13 +20,14 @@
     </div>
     <div class="jumbotron masthead"> 
       <div class="container">     
-        <h1>FSM express</h1>
+        <h1>fluent-fsm</h1>
         <p>The ultimate finite state machine library for Nodejs</p>
         <div class="btn btn-small btn-success">Download </div>
-        <div class="btn btn-small btn-success">Clone on Github </div>
+        <div class="btn btn-small btn-success">Clone on Github</div>
       </div>
     </div>
     <div class="container under-the-jumbotron">
+      <div id="chart" class="code"></div>
       <div class="span8 offset2">
         <div id="text"></div>
         <hr>
@@ -37,5 +38,14 @@
     </div>
     <script src="js/vendor.js"></script>
     <script src="js/client.js"></script>
+    <script>
+      mcup = new eventMockup(333); 
+      vis = new fsmVisualizer(mcup.getEmitter());
+      mcup.runEvents(["II", "IS", "SS", "PS", "OS", "OP" ]);
+      
+      
+      
+      
+    </script>
   </body>
 </html>
