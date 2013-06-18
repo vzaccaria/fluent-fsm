@@ -1,6 +1,6 @@
 {
   "name": "fluent-fsm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DSL to comfortably define finite state machines for node.js",
   "main": "index.js",
   "dependencies": {
@@ -21,16 +21,14 @@
     }
   ],
   "homepage": "http://www.vittoriozaccaria.net/fluent-fsm/",
-  
   "devDependencies": {},
   "scripts": {
     "test": "mocha ./lib/test.js --reporter spec"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vzaccaria/fluent-fsm.git"
+  },
   "author": "Vittorio Zaccaria",
-  "license": "MIT",
-  "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/vzaccaria/fluent-fsm.git"
-  }
+  "license": "MIT"
 }
