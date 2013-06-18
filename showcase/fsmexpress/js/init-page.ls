@@ -3,14 +3,16 @@
 
 text = '''
 
-This awesome library provides an expressive way to specify, run and debug finite state machines in Javascript.
+This awesome library provides an expressive way to specify, run and debug **finite state machines** in Javascript.
 
 Here are the main features:
 
 * Express compact state transitions with regular expressions!
-* Debug your FSM on line with a mini-server (powered by `socketio`)!
+* Debug your FSM on line with a mini-server (powered by `socketio`) with D3js rendering. 
 
-Note: The fsm runs server-side! This is not compatible with browsers at the moment.
+You can see above a live demonstration of what you'll see when you connect to your fsm with a browser [^1]. And yes, **you can attach to different FSMs simultaneously** by using different ports.
+
+**Note**: The fsm runs server-side, on node! This is not compatible with browsers at the moment.
 
 ## Installation
 
@@ -123,11 +125,11 @@ You can have a visual representation of the FSM that is served through a small w
 
 You can see live state transitions (wherever the fsm is, even remotely, provided that the port can be accessed).
 
+## License
+MIT
 
 
- [^1]: In livescript, dashes "-" are used to create camelized Javascript identifiers. So, `any-of` is translated to `anyOf` by the livescript compiler.
-
-
+ [^1]: Event generation is simulated in this page. 
 '''
 
 
