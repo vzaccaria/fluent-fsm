@@ -1,2 +1,6 @@
 
 showcase/fsmexpress/recompile-all
+
+*.log
+
+showcase/fsmexpress/tools/deploy.coffee

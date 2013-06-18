@@ -40,6 +40,9 @@ other-targets = '''
 \n
 js/init-page.ls: js/init-page.ls.template ../../README.md
 \t ./tools/insert.ls ./js/init-page.ls.template -s ../../README.md > ./js/init-page.ls
+
+update-web: deploy
+\t ./tools/deploy.coffee -s ./deploy/static -c "/Users/zaccaria/development/github/fluent-fsm/showcase/fsmexpress" -w "./fluent-fsm" deploy -v -e
 '''
 
 
@@ -56,7 +59,6 @@ files =
 
  
         
-# additional-commands: '\t ../swiss_tool/deploy.coffee -s ./deploy/static -c "/Users/zaccaria/watchdog_2.0" -w "./fsmexpress" deploy -v -e'
 
                      
 generate-makefile( files )

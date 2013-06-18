@@ -20,11 +20,17 @@
       "email": "vittorio.zaccaria@gmail.com"
     }
   ],
+  "homepage": "http://www.vittoriozaccaria.net/fluent-fsm/",
+  
   "devDependencies": {},
   "scripts": {
     "test": "mocha ./lib/test.js --reporter spec"
   },
   "repository": "",
   "author": "Vittorio Zaccaria",
-  "license": "BSD"
+  "license": "MIT",
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/vzaccaria/fluent-fsm.git"
+  }
 }
