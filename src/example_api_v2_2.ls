@@ -1,8 +1,6 @@
 #!/usr/bin/env livescript
-require! {
-    'fsmexpress'.fsm
-    'fsmexpress'.any-of
-}
+require! './fsmexpress'.fsm
+
 
 { EventEmitter } = require 'events'
 

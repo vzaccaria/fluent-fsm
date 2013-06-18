@@ -1,6 +1,6 @@
 #!/usr/bin/env livescript
 require! {
-    'fsmexpress'.fsm
+    './fsmexpress'.fsm
 }
 
 { EventEmitter } = require 'events'
@@ -14,7 +14,7 @@ fs.define-as-initial('I')
 rules = [   { from: 'I', jump-to: 'S',      at: 'x' }
             { from: 'S', jump-to: 'I',      at: 'y' } 
             { from: 'S', jump-to: 'T',      at: 'x' }
-            { from: 'T', jump-to: 'I',      at: 'y' }]
+            { from: 'T', jump-to: 'I',      at: 'y' } ]
 
 for r in rules
     fs.add_rule(r)            
