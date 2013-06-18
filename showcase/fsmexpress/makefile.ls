@@ -21,6 +21,8 @@ pre-vendor-files = [
     "./assets/components/bootstrap/js/bootstrap-typeahead.js"
     "./assets/components/moment/moment.js"
     "./assets/components/showdown/src/showdown.js"
+    "./js/d3.v2.js"
+    "./js/force-fsm.js"
 ]
  
 vendor-files = [ { name: s, type: \js } for s in pre-vendor-files ]
@@ -32,10 +34,12 @@ img-files = [   { files-of-type: \png,  in: "./assets/img/backgrounds"} ]
 
 trigger-dir = [ { files-of-type: \less, in: "./assets/components/bootstrap/less" } ]
 
-other-targets = ''' 
+other-targets = '''
+\t -mkdir -p deploy/static/data
+\t cp data/*.json deploy/static/data 
 \n
 js/init-page.ls: js/init-page.ls.template ../../README.md
-\t ./js/insert.ls ./js/init-page.ls.template -s ../../README.md > ./js/init-page.ls
+\t ./tools/insert.ls ./js/init-page.ls.template -s ../../README.md > ./js/init-page.ls
 '''
 
 
