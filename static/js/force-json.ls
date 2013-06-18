@@ -2,20 +2,15 @@
 
 class fsm-visualizer
   
-    (location, event-emitter-object) ->
+    (event-emitter-object) ->
      
-      if location == "server"
-        data <~ d3.json("data/data.json")
-        @register-socket-io()
-        @display-data(data) 
-        
-      else 
-        @register-to-event-emitter(event-emitter-object)
-        
+      data <~ d3.json("data/data.json")
       @current = null
       @nodec   = null
+      @display-data(data)
+      @register-event-io(event-emitter-object) 
       
-    toggle-link: ->
+    toggle-link: ~>
         | @tgstate == true =>
                     opacity  = 0.0
                     @tgstate = false
@@ -26,31 +21,31 @@ class fsm-visualizer
         d3.selectAll(".link.#{@id}") 
           .style("opacity",opacity)  
             
-    hide-all: -> 
+    hide-all: ~> 
         d3.selectAll(".link") 
           .style("opacity",0.0) 
           
         d3.selectAll(".arcs")
-          .each((d,i) -> @tgstate = false)
+          .each((d,i) ~> @tgstate = false)
 
-    show-all: ->
+    show-all: ~>
         d3.selectAll(".link") 
           .style("opacity",1.0)     
           
         d3.selectAll(".arcs")
-          .each((d,i) -> @tgstate = true)
+          .each((d,i) ~> @tgstate = true)
     
     highlight: (k) ~>
-        console.log "#{@current} -> #{k}"
-        console.log "Setting \#nid-#{@current} - #{@nodec[@current]}"
+        if @current? and @nodec?
+          console.log "#{@current} => #{k}"
+          # console.log "Setting \#nid-#{@current} - #{@nodec[@current]}"
         
-        if @current? 
           d3.selectAll("\#nid-#{@current}")
             .transition()
             .duration(200)
             .style("fill", @nodec[@current])
       
-          console.log "Setting \#nid-#{k} - black"
+        console.log "Setting \#nid-#{k} - black"
   
         d3.selectAll("\#nid-#{k}")
           .transition()
@@ -59,15 +54,19 @@ class fsm-visualizer
           
         @current = k
         
-    register-socket-io:  ~>
-        console.log "Connecting!"  
-        socket = io.connect()
-        socket.on('connect',      -> console.log "Connected!")
-        socket.on('message',  (d) ~> @highlight d.state )
-        socket.on('disconnect',   -> console.log "Disconnected!")
+    register-event-io:  (event-origin) ~>
+        event-origin.on('connect',        ~> console.log "Connected!")
+        event-origin.on 'message',  (d,e) ~> 
+          if(e?.state?)
+              @highlight e.state 
+          else 
+              @highlight d.state
+        event-origin.on('disconnect',     ~> console.log "Disconnected!")
            
     display-data: (data) ~> 
-   
+  
+      @nodec = data.scolor
+ 
       for t in data.transitions
             d3.select("\#buttonlist")
               .append("button")
@@ -88,7 +87,7 @@ class fsm-visualizer
         .text("Show all")
         .on('click.button.data-api', @show-all)
    
-    
+ 
       fsmview(data.links, data.transitions)
         
       @show-all() 
@@ -103,10 +102,11 @@ class fsm-visualizer
            .style("stroke", v.col)
            
          if v.dashed
-              d3.selectAll(".link.#{k}")
-                .style("stroke-dasharray","0,2 1")
+          d3.selectAll(".link.#{k}")
+            .style("stroke-dasharray","0,2 1")
                 
          d3.selectAll("marker\##k")
+           # .style("fill", "\#ff0000")
            .style("fill", v.col)
 
       for k,v of data.scolor
@@ -115,7 +115,33 @@ class fsm-visualizer
            .style("fill", v)
            .style("stroke-width", 5)
       
-      @nodec = data.scolor
    
+
+class event-mockup 
+  
+    (@ms) ~>
+       @event-emitter = jQuery('#chart')
+  
+    get-emitter: ~> 
+       return @event-emitter
     
-vis = new fsm-visualizer("server")
+    run-events: (@v) ~>
+       @vn = []
+       @v.reverse()
+       trig-ev = ~>
+           
+          if(@v.length == 0)
+              @vn.reverse()
+              @v = @vn
+              @vn = [] 
+              
+          ev = @v.pop()
+          console.log "Triggering #ev"    
+          @vn.push(ev)
+          @event-emitter.trigger('message', [ state: ev ])
+          window.set-timeout(trig-ev, @ms)
+
+       trig-ev()
+
+window.fsm-visualizer = fsm-visualizer
+window.event-mockup   = event-mockup

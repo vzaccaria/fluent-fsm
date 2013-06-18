@@ -28,7 +28,7 @@ var force = d3.layout.force()
     .start();
 
 var svg = d3.select("#chart").append("svg:svg")
-    .attr("width", w)
+    // .attr("width", w)
     .attr("height", h);
 
 // Per-type markers, as they don't inherit styles.
