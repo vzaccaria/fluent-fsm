@@ -48,7 +48,7 @@ class fsm
     
     /* The following will be the new way of introducing states */    
     
-    add_rule: ({from, jump-to, excluding, at, execute}) ->
+    add_rule: ({from, jump-to, excluding, at, execute}) ~>
         
         if(excluding?)
             
@@ -66,11 +66,9 @@ class fsm
             transition: at
             before-code: execute)        
     
-    add-to-expanded-rules: (rule) ->
+    add-to-expanded-rules: (rule) ~>
         fsm-debug.debug "#{rule.from} -> #{rule.to}"
         @expanded_rules.push(rule)
-        
-
         
         
     from_initial: (fr) ~> 
