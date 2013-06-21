@@ -1,6 +1,8 @@
 #!/usr/bin/env livescript
 _  = require 'underscore'
 _s = require 'underscore.string'
+{unique} = require 'prelude-ls'
+
 require! 'express'
 require! 'path'
 
@@ -8,8 +10,8 @@ debug = false
 log = if debug then console.log else ->
     
 fsm-debug = {}
-fsm-debug.print = if 1 then (m) -> log "Message: #m" else -> 
-fsm-debug.debug = if 0 then (m) -> log "Debug:   #m" else ->  
+fsm-debug.print = if 0 then (m) -> log "Message: #m" else -> 
+fsm-debug.debug = if 1 then (m) -> log "Debug:   #m" else ->  
 fsm-debug.error = if 0 then (m) -> log "Error:   #m" else -> 
 
 jp = (o) ->
@@ -277,17 +279,23 @@ class fsm
     
 # Let is used to build closures. I.e., it closes over `rule`.   
     register-event-emitter: (@event-source) ~>
-        for rule in @expanded_rules
-            trw = let rule
-                  (...others) ~> 
-                                    if @state == rule.from 
-                                      fsm-debug.print "Jump: #{rule.from} -> #{rule.to} on #{rule.transition}" 
-                                      if @io?
-                                        @io.sockets.emit('message', {state: @state })
-                                      process.next-tick( ~> @state = rule.to )
-                                      if rule.before-code?
-                                        rule.before-code(others)
-            @event-source.on rule.transition, trw
+        registered-transitions = unique [ r.transition for r in @expanded_rules ] 
+
+        event-hook = (event) ~>
+                            let event 
+                                fsm-debug.debug "Received #event"
+                                ~> for rule in @expanded_rules
+                                        if @state == rule.from and event == rule.transition
+                                              fsm-debug.debug "Jump: #{rule.from} -> #{rule.to} on #{rule.transition}" 
+                                              if @io?
+                                                    @io.sockets.emit('message', {state: @state })
+                                              if rule.before-code?
+                                                rule.before-code()
+                                              @state = rule.to 
+                                              return
+                    
+        for t in registered-transitions
+            @event-source.on t, event-hook(t)
     
     prepare-emit: ~>
         for r in @expanded_rules
@@ -351,7 +359,9 @@ class fsm-tester extends EventEmitter
         for r in rules 
             @fsm.add_rule r
         
-    unfold: ~>
+    unfold: (initial) ~>
+        if initial?
+            @fsm.define-as-initial(initial)
         @fsm.unfold()
         @fsm.optimize()
     
@@ -371,10 +381,9 @@ class fsm-tester extends EventEmitter
                     delete e[k] 
         return @fsm.expanded_rules
     
-    run-events: (initial, @events,cb) ~>
+    run-events: (@events,cb) ~>
         @fsm.register-event-emitter(@)
         @setMaxListeners(0)
-        @fsm.define-as-initial(initial)
         @fsm.start()
 
         event-emit = ~>
