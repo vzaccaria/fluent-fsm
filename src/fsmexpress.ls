@@ -396,5 +396,19 @@ class fsm-tester extends EventEmitter
                 process.next-tick cb
         
         process.next-tick event-emit
+
+    run-events-sync: (@events) ~>
+        @fsm.register-event-emitter(@)
+        @setMaxListeners(0)
+        @fsm.start()
+
+        event-emit = ~>
+            e      = _.head(@events)
+            @events = _.tail(@events)
+            @emit e
+            if @events.length > 0
+                event-emit()
+
+        event-emit()
     
 exports.fsm-tester = fsm-tester
