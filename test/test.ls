@@ -215,3 +215,21 @@ describe 'FSM operation', ->
         ft.emit(\x)
         ft.emit(\y)
         ft.get-current-state().should.equal(\S)
+    it 'should trigger the correct amount of event functions (sync)',  (done) ->      
+        ft = null
+        ft = new fsm-tester()
+        ft.create-fsm()
+        count = x: 0, y: 0
+        rules = [
+            { from: 'I', jump-to: 'S', at: 'x' ,  execute: (-> @x = @x + 1).bind(count)}
+            { from: 'S', jump-to: 'I', at: 'x' ,  execute: (-> @x = @x + 1).bind(count)}
+            { from: '(.)', jump-to: '-', at: 'y', execute: (-> @y = @y + 1).bind(count)}
+            ] 
+        ft.add-rules(rules)
+        ft.unfold(\I)
+        ft.run-events-sync [ \x ]
+        count.x.should.be.equal(1)
+        count.y.should.be.equal(0)
+        ft.get-current-state().should.equal(\S)    
+        done() 
+
