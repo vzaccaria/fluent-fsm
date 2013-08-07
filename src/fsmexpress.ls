@@ -248,6 +248,10 @@ class fsm
     get-data: (req, res) ~> 
         # jp @data
         res.send(@data)
+
+    display: (port, name) ~>
+        @prepare-emit()
+        @serve(port, name)
    
     serve: (port, name) ~>
         fsm-debug.print "serving from #{__dirname}"
