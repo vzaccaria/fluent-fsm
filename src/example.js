@@ -1,7 +1,7 @@
 (function(){
   var fsm, anyOf, EventEmitter, fs, red, gre, blu, tester, tst;
-  fsm = require('fsmexpress').fsm;
-  anyOf = require('fsmexpress').anyOf;
+  fsm = require('../lib/fsmexpress.js').fsm;
+  anyOf = require('../lib/fsmexpress.js').anyOf;
   EventEmitter = require('events').EventEmitter;
   fs = new fsm();
   fs.defineAsStates(['II', 'SI', 'PI', 'OI', 'IS', 'SS', 'PS', 'OS', 'IP', 'SP', 'PP', 'OP', 'IC', 'SC', 'PC', 'OC', 'error']);
